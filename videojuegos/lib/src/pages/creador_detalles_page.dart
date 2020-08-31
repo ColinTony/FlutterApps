@@ -62,10 +62,13 @@ class CreadorDetalle extends StatelessWidget {
           Container(
             height: 200.0,
             width: 200.0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50.0),
-              child: Image(
-                image: NetworkImage(creador.getImage()),
+            child: Hero(
+              tag: creador.id,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
+                child: Image(
+                  image: NetworkImage(creador.getImage()),
+                ),
               ),
             ),
           ),

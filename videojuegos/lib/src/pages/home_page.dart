@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:videojuegos/src/models/videojuegos_model.dart';
 import 'package:videojuegos/src/providers/creador_provider.dart';
 import 'package:videojuegos/src/providers/videojuego_provider.dart';
+import 'package:videojuegos/src/search/search_delegate.dart';
 import 'package:videojuegos/src/widgets/card_swiper_widget.dart';
 import 'package:videojuegos/src/widgets/creadores_horizontal.dart';
 
 class HomePage extends StatelessWidget {
   final VideojuegoProvider _videojuegoProvider = new VideojuegoProvider();
   final CreadorProvider _creadorProvider = new CreadorProvider();
+  List<Videojuego> _list;
   @override
   Widget build(BuildContext context) {
     _creadorProvider.getListCreadores();
@@ -18,7 +21,9 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search),
             color: Colors.yellowAccent,
-            onPressed: _buscar,
+            onPressed: () {
+              _busqueda(context);
+            },
           ),
         ],
         title: Text("Videojuegos"),
@@ -32,17 +37,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _buscar() {
-    print("vamos a buscar");
-  }
-
   Widget _swipedTarjetas() {
     return FutureBuilder(
       future: _videojuegoProvider.getListVideogames(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-        if (snapshot.hasData)
+        if (snapshot.hasData) {
+          _list = snapshot.data;
           return CardSwiper(listData: snapshot.data);
-        else
+        } else
           return Container(
               height: 350.0, child: Center(child: CircularProgressIndicator()));
       },
@@ -83,5 +85,9 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _busqueda(BuildContext context) {
+    showSearch(context: context, delegate: DataSearh(lista: _list));
   }
 }

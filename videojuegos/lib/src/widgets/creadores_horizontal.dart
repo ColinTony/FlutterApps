@@ -36,13 +36,16 @@ class CreadoresHorizontal extends StatelessWidget {
       margin: EdgeInsets.only(right: 5.0),
       child: Column(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30.0),
-            child: FadeInImage(
-              fit: BoxFit.cover,
-              height: 160.0,
-              image: NetworkImage(e.getImage()),
-              placeholder: AssetImage("assets/img/loading.gif"),
+          Hero(
+            tag: e.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30.0),
+              child: FadeInImage(
+                fit: BoxFit.cover,
+                height: 160.0,
+                image: NetworkImage(e.getImage()),
+                placeholder: AssetImage("assets/img/loading.gif"),
+              ),
             ),
           ),
           Expanded(

@@ -30,8 +30,12 @@ class CardSwiper extends StatelessWidget {
             placeholder: AssetImage("assets/img/loading.gif"),
             image: NetworkImage(listData[id].getImageBackGround()),
             fit: BoxFit.cover));
-    return GestureDetector(
+    final hero = Hero(
       child: tarjetaVideojuegosGrande,
+      tag: listData[id].id,
+    );
+    return GestureDetector(
+      child: hero,
       onTap: () {
         Navigator.pushNamed(context, "detalleV", arguments: listData[id].id);
       },
