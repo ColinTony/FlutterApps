@@ -8,7 +8,7 @@ class ScrollPage extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: <Widget>[
           _pagina1(),
-          _pagina2(),
+          _pagina2(context),
         ],
       ),
     );
@@ -17,20 +17,17 @@ class ScrollPage extends StatelessWidget {
   Widget _pagina1() => Stack(
         children: <Widget>[_colorFondo(), _imagenFondo(), _textos()],
       );
-  Widget _pagina2() => Container(
+  Widget _pagina2(BuildContext context) => Container(
         width: double.infinity,
         height: double.infinity,
         child: Center(
             child: RaisedButton(
           shape: StadiumBorder(),
-          onPressed: () => print("Hola"),
+          onPressed: () => Navigator.pushNamed(context, "botonesPage"),
           color: Colors.blue,
           elevation: 10.0,
           textColor: Colors.white,
-          child: Text(
-            "Bienvenido",
-            style: TextStyle(fontSize: 20.0),
-          ),
+          child: Text("Bienvenido", style: TextStyle(fontSize: 20.0)),
           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
         )),
         color: Color.fromRGBO(108, 192, 218, 1.0),
@@ -56,20 +53,10 @@ class ScrollPage extends StatelessWidget {
     final column = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(
-          "11°",
-          style: estilo,
-        ),
-        Text(
-          "Miercoles",
-          style: estilo,
-        ),
+        Text("20°", style: estilo),
+        Text("Jueves", style: estilo),
         Expanded(child: Container()),
-        Icon(
-          Icons.keyboard_arrow_down,
-          size: 70.0,
-          color: Colors.white,
-        )
+        Icon(Icons.keyboard_arrow_down, size: 70.0, color: Colors.white)
       ],
     );
     return SafeArea(child: column);
