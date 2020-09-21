@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qreaderapp/src/pages/direcciones_page.dart';
 import 'package:qreaderapp/src/pages/mapas_page.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,6 +10,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  final _flashOnController = TextEditingController(text: "Flash on");
+  final _flashOffController = TextEditingController(text: "Flash off");
+  final _cancelController = TextEditingController(text: "Cancel");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +30,28 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: () {},
+        onPressed: _scamQr,
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
+  }
+
+  _scamQr() async {
+    ScanResult futureString;
+    var options = ScanOptions(strings: {
+      "cancel": _cancelController.text,
+      "flash_on": _flashOffController.text,
+      "flash_off": _flashOffController.text
+    });
+    try {
+      futureString = await BarcodeScanner.scan(options: options);
+    } catch (e) {
+      print(e.toString());
+    }
+    // geo:40.7356804248455,-74.2847193761719
+
+    print("Future string => ${futureString.rawContent}");
+    if (futureString != null) print("Tenemos info");
   }
 
   Widget _callPage(int index) {
